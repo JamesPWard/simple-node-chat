@@ -1,6 +1,7 @@
 const textInput = document.getElementById('chat-input');
 const sendBtn = document.getElementById('btn-send');
 const chatList = document.querySelector('.chat-list');
+const clientList = document.querySelector('.client-window ul');
 const ws = new WebSocket('ws://localhost:1017');
 
 //Get username
@@ -33,14 +34,19 @@ ws.onmessage = (data) => {
             console.log(`${message.username}`);
             break;
         case "msgList":
-
             message.collection.forEach((msg) => {
                 //Create chat item
                 var msgElement = document.createElement('li');
                 msgElement.innerHTML = `<p class="message-username">${msg.username}</p><p class="message-text">${msg.message}</p>`;
                 chatList.appendChild(msgElement);
             });
-
+            break;
+        case "userList":
+            message.collection.forEach((user) => {
+                const activeUser = document.createElement('li');
+                activeUser.appendChild(document.createTextNode(user));
+                clientList.appendChild(activeUser);
+            });
             break;
     }
 };

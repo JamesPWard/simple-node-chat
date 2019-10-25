@@ -22,6 +22,7 @@ wss.on('connection', (ws) => {
     console.log('Running');
 
     //Send ALL messages
+    ws.send(JSON.stringify(activeUsers));
     ws.send(JSON.stringify(messages));
 
     //Message received
