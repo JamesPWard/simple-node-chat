@@ -5,8 +5,8 @@ const WebSocketServer = require('ws').Server,
     httpPort = 1337;
 
 //Chat variables
-var messages = [];
-var activeUsers = [];
+let messages = {type:'msgList',collection:[]};
+let activeUsers = {type:'userList', collection:[]};
 
 http.createServer((req, res) => {
 
@@ -21,6 +21,9 @@ wss.on('connection', (ws) => {
     //Add to active users
     console.log('Running');
 
+    //Send ALL messages
+    ws.send(JSON.stringify(messages));
+
     //Message received
     ws.on('message', (message) => {
 
@@ -31,7 +34,7 @@ wss.on('connection', (ws) => {
         switch (message.type) {
             case "user":
                 //If object is type user add to client list
-                activeUsers.push(message);
+                activeUsers.collection.push(message.username);
                 break;
             case "message":
                 //Log message to console
@@ -48,8 +51,9 @@ wss.on('connection', (ws) => {
 
     function sendToChat(message){
         wss.clients.forEach((client) => {
-            if(client.readyState == ws.OPEN){
+            if(client.readyState === ws.OPEN){
                 client.send(JSON.stringify(message));
+                messages.collection.push(message);
             }
         });
     }

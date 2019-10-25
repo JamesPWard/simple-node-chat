@@ -5,7 +5,7 @@ const ws = new WebSocket('ws://localhost:1017');
 
 //Get username
 const username = prompt('What is your username?');
-const userObj = {type: "user", username:username, colour:"green"};
+const userObj = {type: "user", username: username, colour: "green"};
 
 //Websocket connected
 ws.onopen = () => {
@@ -13,12 +13,12 @@ ws.onopen = () => {
     ws.send(JSON.stringify(userObj));
 };
 
-//Update chat
-ws.onmessage = (message) => {
+//Update chat/client list
+ws.onmessage = (data) => {
 
-    var message = JSON.parse(message.data);
+    const message = JSON.parse(data.data);
 
-    switch(message.type){
+    switch (message.type) {
         case "message":
             console.log(`${message.username}:${message.message}`);
 
@@ -32,8 +32,17 @@ ws.onmessage = (message) => {
         case "user":
             console.log(`${message.username}`);
             break;
-    }
+        case "msgList":
 
+            message.collection.forEach((msg) => {
+                //Create chat item
+                var msgElement = document.createElement('li');
+                msgElement.innerHTML = `<p class="message-username">${msg.username}</p><p class="message-text">${msg.message}</p>`;
+                chatList.appendChild(msgElement);
+            });
+
+            break;
+    }
 };
 
 //Client leaves
@@ -44,8 +53,8 @@ ws.onmessage = (message) => {
 // };
 
 //When send is clicked
-sendBtn.addEventListener('click', function(e){
+sendBtn.addEventListener('click', function (e) {
     //Get text from input field
-    var messageObject = {type: "message", username:username, message:textInput.value};
+    var messageObject = {type: "message", username: username, message: textInput.value};
     ws.send(JSON.stringify(messageObject));
 });
