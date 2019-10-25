@@ -1,0 +1,88 @@
+*{
+    font-family: 'Trebuchet MS';
+}
+
+.chat-container{
+    background: green;
+    width: 100vw;
+    height: 75vh;
+    display: grid;
+    grid-template-rows: 10% 70% 20%;
+    grid-template-columns: 75% 25%;
+    margin-top: 12.5vh;
+}
+
+.chat-header {
+    grid-row: 1;
+    grid-column: 1 / span 2;
+    text-align: center;
+    color: white;
+}
+
+.chat-window{
+    background: aqua;
+    grid-row: 2 / span 1;
+    grid-column: 1;
+    overflow: scroll;
+}
+
+.chat-list{
+    list-style-type: none;
+    padding: 0;
+}
+
+.chat-list li{
+    background: azure;
+    margin-bottom: 2rem;
+}
+
+.message-username{
+    display: inline-block;
+    font-size: 1.5rem;
+    font-style: italic;
+    padding: 1rem;
+}
+
+/* Message */
+.message-text{
+    display: inline-block;
+    font-size: 1.25rem;
+    padding: 1rem;
+}
+
+.chat-controls{
+    background: aquamarine;
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.chat-controls input{
+    width: 90%;
+    display: inline-block;
+    padding: 0;
+    border: 0;
+}
+
+.chat-controls button{
+    width: 10%;
+    padding: 0;
+    border: 0;
+}
+
+.client-window{
+    background: red;
+    grid-row: 2 / span 3;
+    grid-column: 2;
+}
+
+.client-window ul{
+    list-style-type: none;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.client-window ul li{
+    font-size: 2rem;
+}

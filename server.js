@@ -1,5 +1,7 @@
-const WebSocketServer = require('ws').server, wss = new WebSocketServer({port: 1337});
-const http = require('http'), httpPort = 1337;
+const WebSocketServer = require('ws').Server,
+    wss = new WebSocketServer({port: 1017}),
+    http = require('http'),
+    httpPort = 1337;
 
 http.createServer((req, res) => {
 
@@ -7,9 +9,13 @@ http.createServer((req, res) => {
     res.end('Hello World');
     console.log(`Request to ${req.url} successful`);
 
-});
+}).listen(httpPort);
 
-wss.on('connection', (ws) =>
-{
+wss.on('connection', (ws) => {
+
+    //Message received
+    ws.on('message', (message) => {
+        console.log(message);
+    });
 
 });
